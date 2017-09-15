@@ -1,0 +1,33 @@
+version: 0.0
+os: linux
+
+files:
+  - source: ./appspec.yml
+    destination: /home/ec2-user
+  - source: ./awslogs.conf
+    destination: /etc/awslogs
+  - source: ./restartapp.sh
+    destination: /home/ec2-user
+  - source: ./target/team4-0.0.1-SNAPSHOT.war
+    destination: /home/ec2-user
+
+#permissions:
+#  - object: /var/lib/tomcat7/webapps
+#      pattern: "**"
+#      owner: tomcat7
+#      group: tomcat7
+#      mode: 755
+#      type:
+#        - directory
+#  - object: /home/ubuntu
+#      pattern: "*.sh"
+#      owner: ubuntu
+#      mode: 755
+#      type:
+#        - file
+
+hooks:
+  AfterInstall:
+   - location: ./restartapp.sh
+     timeout: 180
+#     runas: ubuntu
